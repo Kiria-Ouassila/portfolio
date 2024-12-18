@@ -49,26 +49,4 @@ window.onscroll = () => {
     footer.classList.toggle('show-animate', this.innerHeight + this.scrollY >=document.scrollingElement.scrollHeight);
 
 }
-
-(function() {
-    emailjs.init("O3GEcPdU0reDzD9JS");  
-  })();
-
-  const form = document.getElementById('contact-form');
-  form.addEventListener('submit', function(event) {
-    event.preventDefault();  // Prevent default form submission
-
-    // Collect form data
-    const formData = new FormData(form);
-
-    // Send email via EmailJS
-    emailjs.sendForm('ouassilakiria@gmail.com', 'contact_me', formData)
-      .then(function(response) {
-        // Success message
-        document.getElementById('response').innerText = 'Message sent successfully!';
-      }, function(error) {
-        // Error message
-        document.getElementById('response').innerText = 'Oops, something went wrong.';
-      });
-  });
   
