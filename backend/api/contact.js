@@ -12,3 +12,18 @@ export default async function handler(req, res) {
     res.setHeader("Allow", ["POST"]);
     return res.status(405).end(`Method ${req.method} Not Allowed`);
 }
+
+
+export default function handler(req, res) {
+    res.setHeader('Access-Control-Allow-Origin', '*'); // Allow all origins, or specify your frontend URL
+    res.setHeader('Access-Control-Allow-Methods', 'POST'); // Allow POST requests
+
+    if (req.method === "POST") {
+        const data = req.body;
+
+        // Process form data (e.g., save to database, send email, etc.)
+        res.status(200).json({ message: "Form submitted successfully!" });
+    } else {
+        res.status(405).json({ message: "Method Not Allowed" });
+    }
+}
