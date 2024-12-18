@@ -49,4 +49,31 @@ window.onscroll = () => {
     footer.classList.toggle('show-animate', this.innerHeight + this.scrollY >=document.scrollingElement.scrollHeight);
 
 }
-  
+
+const contactForm = document.getElementById("contact-form");
+
+contactForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(contactForm);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+        const response = await fetch("https://portfolio-3mviggm3q-ouassilas-projects.vercel.app/api/contact", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+        });
+
+        if (response.ok) {
+            alert("Form submitted successfully!");
+            contactForm.reset();
+        } else {
+            alert("Error submitting the form.");
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Something went wrong.");
+    }
+});
+
