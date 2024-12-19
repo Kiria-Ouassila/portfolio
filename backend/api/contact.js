@@ -1,29 +1,30 @@
- 
 export default async function handler(req, res) {
-    if (req.method === "POST") {
-        const { name, email, phone, subject, message } = req.body;
+    res.setHeader("Access-Control-Allow-Origin", "*"); 
+    res.setHeader("Access-Control-Allow-Methods", "POST");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-        // You can process the form data here (e.g., save to a database or send an email)
-        console.log({ name, email, phone, subject, message });
-
-        return res.status(200).json({ message: "Form submitted successfully!" });
+    if (req.method === "OPTIONS") {
+        // Preflight request for CORS
+        return res.status(200).end();
     }
-
-    res.setHeader("Allow", ["POST"]);
-    return res.status(405).end(`Method ${req.method} Not Allowed`);
-}
-
-
-export default function handler(req, res) {
-    res.setHeader('Access-Control-Allow-Origin', '*'); // Allow all origins, or specify your frontend URL
-    res.setHeader('Access-Control-Allow-Methods', 'POST'); // Allow POST requests
-
+ 
     if (req.method === "POST") {
-        const data = req.body;
+        try {
+            const { name, email, phone, subject, message } = req.body;
 
-        // Process form data (e.g., save to database, send email, etc.)
-        res.status(200).json({ message: "Form submitted successfully!" });
+            if (!name || !email || !message) {
+                return res.status(400).json({ error: "Name, email, and message are required." });
+            }
+
+            console.log({ name, email, phone, subject, message });
+
+            return res.status(200).json({ message: "Form submitted successfully!" });
+        } catch (error) {
+            console.error("Error processing form submission:", error);
+            return res.status(500).json({ error: "Something went wrong!" });
+        }
     } else {
-        res.status(405).json({ message: "Method Not Allowed" });
+        res.setHeader("Allow", ["POST"]);
+        return res.status(405).json({ error: `Method ${req.method} Not Allowed` });
     }
 }
