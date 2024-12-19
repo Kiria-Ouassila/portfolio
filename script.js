@@ -59,7 +59,7 @@ contactForm.addEventListener("submit", async (event) => {
     const data = Object.fromEntries(formData.entries());
 
     try {
-        const response = await fetch("https://my-portfolio-omega-three-84.vercel.app/api/contact", {
+        const response = await fetch("https://my-portfolio-j9utkw4nw-ouassilas-projects.vercel.app//api/contact", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
